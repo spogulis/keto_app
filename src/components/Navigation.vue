@@ -1,9 +1,9 @@
 <template>
   <div id="nav-div">
-    <button> {{ planBtn }}</button>
-    <button> {{ addBtn }}</button>
-    <button> {{ editBtn }}</button>
-    <button> {{ dbBtn }}</button>
+    <button class="button"> {{ planBtn }}</button>
+    <button class="button" @click="toggleAdd()"> {{ addBtn }}</button>
+    <button class="button"> {{ editBtn }}</button>
+    <button class="button" @click="toggleDb()"> {{ dbBtn }}</button>
   </div>
 </template>
 
@@ -17,23 +17,30 @@
         planBtn: 'Plan meal',
         editBtn: 'Edit product'
       }
+    },
+
+    methods: {
+
+      toggleDb() {
+        this.$emit('dbemit')
+      },
+
+      toggleAdd() {
+        this.$emit('apemit')
+      }
+
+      }
     }
-  }
+
 </script>
 
 <style scoped>
+  @import '../css/shared.css';
   #nav-div {
     flex: 0 0 auto;
     display: flex;
     justify-content: space-around;
+    background: #1C2541;
+  }
 
-  }
-  button {
-    color: white;
-    background: darkgrey;
-    font-weight: bold;
-    font-size: 20px;
-    padding: 20px 15px;
-    margin: 5px 0;
-  }
 </style>

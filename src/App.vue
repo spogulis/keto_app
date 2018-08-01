@@ -1,14 +1,46 @@
 <template>
   <div id="app">
     <app-title></app-title>
-    <nav-buttons></nav-buttons>
-    <db></db>
+    <nav-buttons
+      v-on:apemit="toggleAp()"
+      v-on:dbemit="toggleDb()">
+    </nav-buttons>
+    <add-product v-show="ds.apshow"></add-product>
+    <db v-show="ds.dbshow"></db>
   </div>
 </template>
 
 <script>
+Vue.component('app-title', Title)
+Vue.component('nav-buttons', Navigation)
+Vue.component('add-product', AddProduct)
+Vue.component('db', Database)
+
+import Vue from 'vue'
+import Title from './Components/Title.vue'
+import Navigation from './Components/Navigation.vue'
+import AddProduct from './Components/AddProduct.vue'
+import Database from './Components/Database.vue'
+import ds from './data/datastore.js'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { Title, Navigation, AddProduct, Database },
+  data() {
+    return {
+      ds
+    }
+  },
+
+  methods: {
+    toggleDb() {
+      ds.dbshow = !ds.dbshow
+    },
+    toggleAp() {
+      ds.apshow = !ds.apshow
+    }
+  }
+
 }
 </script>
 
@@ -17,8 +49,8 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
   font-family: Helvetica Neue, Arial, sans-serif;
+  background: #5BC0BE;
 }
 #app > * {
   flex: 1 100%;

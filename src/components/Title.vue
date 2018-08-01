@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Title',
   data () {
@@ -21,7 +22,7 @@ export default {
     flex: 0 1 auto;
   }
   h2 {
-    background-color: darkgrey;
+    background-color: #5BC0BE;
     padding: 5px 10px;
     text-align: center;
     margin: 0;

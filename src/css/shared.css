@@ -1,0 +1,13 @@
+.button {
+  color: #3A506B;
+  background: lightgrey;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0.5em;
+  margin: 5px 5px;
+  border-radius: 5px;
+}
+
+.button-center {
+  margin: 0 auto;
+}

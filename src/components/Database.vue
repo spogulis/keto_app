@@ -4,19 +4,21 @@
       <thead>
         <tr>
           <th
-            v-for="prAttr in gridColumns"
+            v-for="prAttr in ds.db.gridColumns"
           >{{ prAttr }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products">
-          <td> {{ product.name }} </td>
-          <td> {{ product.carbs }} </td>
-          <td> {{ product.sugar}} </td>
-          <td> {{ product.fiber }} </td>
-          <td> {{ product.fat }} </td>
-          <td> {{ product.protein }} </td>
-          <td> {{ unknwn(product) }}</td>
+        <tr
+          :weight="weight"
+          v-for="product in ds.db.products">
+          <td> {{ product.name }}  </td>
+          <td> {{ carbs(product, weight) }} </td>
+          <td> {{ sugar(product, weight) }} </td>
+          <td> {{ fiber(product, weight) }} </td>
+          <td> {{ fat(product, weight) }} </td>
+          <td> {{ protein(product, weight) }} </td>
+          <td> {{ unknwn(product, weight)}}</td>
         </tr>
       </tbody>
     </table>
@@ -24,44 +26,56 @@
 </template>
 
 <script>
+  import ds from '../data/datastore.js'
+
   export default {
     name: 'Database',
     data() {
       return {
-        gridColumns: ['Product name', 'Carbs (%)', 'Sugar (%)', 'Fiber (%)',
-        'Fat (%)', 'Protein (%)', 'Unknwn(%)'],
-        products: [
-          {name: 'Rimi piens pasterizets 2,5%', carbs: '4,8', sugar: '4,8',
-        fiber: '0', fat: '2,5', protein: '3,2', unknwn: 'unknwn_ingredients'},
-          {name: 'Santini Ksylitol', carbs: '99,8', sugar: '0,2',
-        fiber: '0', fat: '0', protein: '0'}
-        ]
-      }
-    },
-
-    computed: {
-      c_carbs(cp, weight) {
-        let c_carbs = parseFloat(cp.carbs) / weight * 100
-        return c_carbs
+        ds,
+        weight: ds.weight
       }
     },
 
     methods: {
-      unknwn(cp) {
-        let unknwn_ingredients = 100 - parseFloat(cp.carbs)
-         - parseFloat(cp.fiber) - parseFloat(cp.fat) - parseFloat(cp.protein)
+      unknwn(cp, weight) {
+        let unknwn_ingredients = (100 - cp.carbs
+         - cp.fiber - cp.fat - cp.protein) / weight * 100
+        return unknwn_ingredients.toFixed(2)
+        },
 
-        return unknwn_ingredients
-        }
+      carbs(cp, weight) {
+        let carbs = cp.carbs / weight * 100
+        return carbs.toFixed(2)
+      },
+
+      sugar(cp, weight) {
+        let sugar = cp.sugar / weight * 100
+        return sugar.toFixed(2)
+      },
+
+      fiber(cp, weight) {
+        let fiber = cp.fiber / weight * 100
+        return fiber.toFixed(2)
+      },
+
+      fat(cp, weight) {
+        let fat = cp.fat / weight * 100
+        return fat.toFixed(2)
+      },
+
+      protein(cp, weight) {
+        let protein = cp.protein / weight * 100
+        return protein.toFixed(2)
       }
     }
-
+  }
 </script>
 
 <style scoped>
   #db {
     flex: 1 1 70%;
-    background: darkgrey;
+    background: lightgrey;
     padding: 5px 5px;
   }
 
@@ -92,5 +106,8 @@
     border-right: none;
   }
 
+  .db-hidden {
+    display: none !important;
+  }
 
 </style>
