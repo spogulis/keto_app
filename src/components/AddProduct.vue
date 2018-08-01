@@ -4,8 +4,6 @@
       id="form1"
       @submit.prevent>
       <div
-
-
         id="add-product-container"
         v-for="(item, i) in ds.form_keys">
         <div class="list-block">
@@ -16,6 +14,10 @@
             class="input-field" />
         </div>
         <br>
+      </div>
+      <div id="serving">
+        Serving size:
+        <input v-model.number="ds.weight" type="number" class="input-field"></input>
       </div>
       <div id="btn-container">
         <button class="button button-center" @click="submit_form()">Submit</button>
@@ -34,7 +36,16 @@
     name: 'AddProduct',
     data() {
       return {
-        ds
+        ds,
+        weight: ds.weight,
+        servingValue: ''
+      }
+    },
+    computed: {
+      transformInput() {
+          parseFloat(ds.weight)
+          console.log(typeof(ds.weight))
+
       }
     },
     methods: {
@@ -47,15 +58,25 @@
       },
 
       submit_form() {
-        ds.db.products.push({name: ds.form_values[0], carbs: ds.form_values[1],
-          sugar: ds.form_values[2], fiber: ds.form_values[3],
-          fat: ds.form_values[4], protein: ds.form_values[5],
+        ds.db.products.push({
+          name: ds.form_values[0],
+          carbs: this.calculateGrams(ds.form_values[1]),
+          sugar: this.calculateGrams(ds.form_values[2]),
+          fiber: this.calculateGrams(ds.form_values[3]),
+          fat: this.calculateGrams(ds.form_values[4]),
+          protein: this.calculateGrams(ds.form_values[5]),
           unknwn: 'unknwn_ingredients'})
           this.resetForm()
       },
 
+      calculateGrams(foodstuff) {
+        var coef = parseFloat(ds.weight / 100)
+        return foodstuff * coef
+      },
+
       resetForm() {
         ds.form_values = []
+        ds.weight = 100
       }
     }
   }
@@ -95,5 +116,10 @@
 
   p {
     min-width: 140px;
+  }
+
+  #serving {
+    text-align: center;
+    margin-bottom: 20px;
   }
 </style>

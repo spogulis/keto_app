@@ -13,12 +13,12 @@
           :weight="weight"
           v-for="product in ds.db.products">
           <td> {{ product.name }}  </td>
-          <td> {{ carbs(product, weight) }} </td>
-          <td> {{ sugar(product, weight) }} </td>
-          <td> {{ fiber(product, weight) }} </td>
-          <td> {{ fat(product, weight) }} </td>
-          <td> {{ protein(product, weight) }} </td>
-          <td> {{ unknwn(product, weight)}}</td>
+          <td> {{ carbs(product) }} </td>
+          <td> {{ sugar(product) }} </td>
+          <td> {{ fiber(product) }} </td>
+          <td> {{ fat(product) }} </td>
+          <td> {{ protein(product) }} </td>
+          <td> {{ unknwn(product)}}</td>
         </tr>
       </tbody>
     </table>
@@ -38,34 +38,34 @@
     },
 
     methods: {
-      unknwn(cp, weight) {
+      unknwn(cp) {
         let unknwn_ingredients = (100 - cp.carbs
-         - cp.fiber - cp.fat - cp.protein) / weight * 100
+         - cp.fiber - cp.fat - cp.protein) / ds.weight * 100
         return unknwn_ingredients.toFixed(2)
         },
 
-      carbs(cp, weight) {
-        let carbs = cp.carbs / weight * 100
+      carbs(cp) {
+        let carbs = cp.carbs / ds.weight * 100
         return carbs.toFixed(2)
       },
 
-      sugar(cp, weight) {
-        let sugar = cp.sugar / weight * 100
+      sugar(cp) {
+        let sugar = cp.sugar / ds.weight * 100
         return sugar.toFixed(2)
       },
 
-      fiber(cp, weight) {
-        let fiber = cp.fiber / weight * 100
+      fiber(cp) {
+        let fiber = cp.fiber / ds.weight * 100
         return fiber.toFixed(2)
       },
 
-      fat(cp, weight) {
-        let fat = cp.fat / weight * 100
+      fat(cp) {
+        let fat = cp.fat / ds.weight * 100
         return fat.toFixed(2)
       },
 
-      protein(cp, weight) {
-        let protein = cp.protein / weight * 100
+      protein(cp) {
+        let protein = cp.protein / ds.weight * 100
         return protein.toFixed(2)
       }
     }

@@ -4,8 +4,8 @@ export default {
   epshow: false,
   pmshow: false,
   weight: 100,
-  form_keys: ['Product name', 'Carbs (g)', 'of which sugar(g)', 'Fiber', 'Fat',
-              'Protein'],
+  form_keys: ['Product name', 'Carbs (g)', 'of which sugar(g)', 'Fiber (g)',
+              'Fat (g)', 'Protein (g)'],
   form_values: [],
   db: {
     gridColumns: ['Product name', 'Carbs (%)', 'Sugar (%)', 'Fiber (%)',
