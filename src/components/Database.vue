@@ -1,7 +1,11 @@
 <template>
   <div id="db">
+    <edit-record v-if="ds.editshow" :editemit="closeEdit()"></edit-record>
     <table>
       <thead>
+        <tr>
+          <th colspan="8">Product name</th>
+        </tr>
         <tr>
           <th
             v-for="prAttr in ds.db.gridColumns"
@@ -9,27 +13,48 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          :weight="weight"
-          v-for="product in ds.db.products">
-          <td> {{ product.name }}  </td>
-          <td> {{ carbs(product) }} </td>
-          <td> {{ sugar(product) }} </td>
-          <td> {{ fiber(product) }} </td>
-          <td> {{ fat(product) }} </td>
-          <td> {{ protein(product) }} </td>
-          <td> {{ unknwn(product)}}</td>
-        </tr>
+        <template :weight="weight" v-for="(product, i) in ds.db.products">
+          <tr >
+            <td class="id-col" rowspan="2">{{ i + 1 }}</td>
+            <td class="title-row" colspan="7"><i>{{ product.name }}</i></td>
+          </tr>
+
+          <tr>
+            <td> {{ carbs(product) }} </td>
+            <td> {{ sugar(product) }} </td>
+            <td> {{ fiber(product) }} </td>
+            <td> {{ fat(product) }} </td>
+            <td> {{ protein(product) }} </td>
+            <td> {{ unknwn(product)}}</td>
+            <td>
+              <img @click="deleteRecord(i)"
+              id="del-image"
+              src="../assets/delete.png">
+              </img>
+              <img @click="editRecord(i + 1)"
+              id="edit-image"
+              src="../assets/edit.png">
+              </img>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
+
+
   </div>
 </template>
 
 <script>
   import ds from '../data/datastore.js'
+  import EditRecord from './EditRecord.vue'
 
   export default {
     name: 'Database',
+    components: {
+      'edit-record': EditRecord
+    },
+
     data() {
       return {
         ds,
@@ -67,21 +92,56 @@
       protein(cp) {
         let protein = cp.protein / ds.weight * 100
         return protein.toFixed(2)
+      },
+
+      deleteRecord(record_id) {
+        ds.db.products.splice(record_id, 1)
+      },
+
+      editRecord(current_record) {
+        if (ds.apshow == true) {
+          ds.apshow = false
+          ds.editshow = true //show edit component
+        } else {ds.editshow = true}
+        ds.selected_edit = current_record
+        ds.db.editObject[0].content = ds.db.products[current_record - 1].name
+        ds.db.editObject[1].content = ds.db.products[current_record - 1].carbs
+        ds.db.editObject[2].content = ds.db.products[current_record - 1].sugar
+        ds.db.editObject[3].content = ds.db.products[current_record - 1].fiber
+        ds.db.editObject[4].content = ds.db.products[current_record - 1].fat
+        ds.db.editObject[5].content = ds.db.products[current_record - 1].protein
+      },
+
+      closeEdit() {
+        this.editShow = false
       }
     }
   }
 </script>
 
 <style scoped>
+  .test {
+    display: flex;
+  }
   #db {
-    flex: 1 1 70%;
+    flex: 1 1 100%;
     background: lightgrey;
-    padding: 5px 5px;
   }
 
   table {
     padding: 10px 0;
+    width: 100%;
+  }
+
+  .id-col {
+    /* max-width: 20px; */ /* TODO: fix width */
+  }
+
+  .title-row {
+    border-bottom: 1px solid white;
     font-size: 18px;
+    text-align: center;
+    color: #1C2541;
   }
 
   th {
@@ -106,8 +166,11 @@
     border-right: none;
   }
 
-  .db-hidden {
-    display: none !important;
+  #del-image {
+    width: 30px;
   }
 
+  #edit-image {
+    width: 30px;
+  }
 </style>

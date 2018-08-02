@@ -6,7 +6,7 @@
       v-on:dbemit="toggleDb()">
     </nav-buttons>
     <add-product v-show="ds.apshow"></add-product>
-    <db v-show="ds.dbshow"></db>
+    <db v-if="ds.dbshow"></db>
   </div>
 </template>
 
@@ -35,30 +35,35 @@ export default {
   methods: {
     toggleDb() {
       ds.dbshow = !ds.dbshow
+      if (ds.editshow == true) {
+        ds.editshow = false
+      }
     },
     toggleAp() {
       ds.apshow = !ds.apshow
+      if (ds.editshow == true) {
+        ds.editshow = false
+      }
     }
   }
-
 }
 </script>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: Helvetica Neue, Arial, sans-serif;
-  background: #5BC0BE;
-}
-#app > * {
-  flex: 1 100%;
-}
-#app {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  height: 100vh;
-}
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Helvetica Neue, Arial, sans-serif;
+    background: #5BC0BE;
+  }
+  #app > * {
+    flex: 1 100%;
+  }
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    height: 100vh;
+  }
 </style>

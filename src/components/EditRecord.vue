@@ -1,18 +1,18 @@
 <template>
-  <div id="add-product">
+  <div id="edit-product">
     <form
       id="form1"
       @submit.prevent>
       <div
-        id="add-product-container"
-        v-for="(item, i) in ds.form_keys">
+        id="edit-product-container"
+        v-for="(item, i) in ds.db.editObject">
         <div class="list-block">
-          <p>{{ item }}:</p>
+          <p>{{ item.list_name }}:</p>
           <input
             :type="form_product(i)"
             step="0.1"
             min="0"
-            v-model.lazy="ds.form_values[i]"
+            v-model.lazy="ds.db.editObject[i].content"
             class="input-field" />
         </div>
         <br>
@@ -22,8 +22,9 @@
         <input v-model.number="ds.weight" type="number" min="0" class="input-field"></input>
       </div>
       <div id="btn-container">
-        <button class="button button-center" @click="submit_form()">Submit</button>
+        <button class="button button-center" @click="edit_product()">Edit record</button>
         <button class="button button-center" @click="resetForm()">Reset Form</button>
+        <button class="button button-center" @click="ds.editshow=false">Cancel</button>
       </div>
     </form>
     <div>
@@ -35,7 +36,7 @@
 <script>
   import ds from '../data/datastore.js'
   export default {
-    name: 'AddProduct',
+    name: 'EditProduct',
     data() {
       return {
         ds,
@@ -53,16 +54,23 @@
         }
       },
 
-      submit_form() {
-        ds.db.products.push({
-          name: ds.form_values[0],
-          carbs: this.calculateGrams(ds.form_values[1]),
-          sugar: this.calculateGrams(ds.form_values[2]),
-          fiber: this.calculateGrams(ds.form_values[3]),
-          fat: this.calculateGrams(ds.form_values[4]),
-          protein: this.calculateGrams(ds.form_values[5]),
-          unknwn: 'unknwn_ingredients'})
-          this.resetForm()
+      edit_product() {
+        let i = ds.selected_edit - 1
+        let name = ds.db.editObject[0].content
+        let carbs = ds.db.editObject[1].content
+        let sugar = ds.db.editObject[2].content
+        let fiber = ds.db.editObject[3].content
+        let fat = ds.db.editObject[4].content
+        let protein = ds.db.editObject[5].content
+
+        ds.db.products[i].name = name
+        ds.db.products[i].carbs = carbs
+        ds.db.products[i].sugar = sugar
+        ds.db.products[i].fiber = fiber
+        ds.db.products[i].fat = fat
+        ds.db.products[i].protein = protein
+
+        ds.editshow = false
       },
 
       calculateGrams(foodstuff) {
@@ -71,8 +79,13 @@
       },
 
       resetForm() {
-        ds.form_values = ['', 0, 0, 0, 0, 0]
         ds.weight = 100
+        ds.db.editObject[0].content = 0
+        ds.db.editObject[1].content = 0
+        ds.db.editObject[2].content = 0
+        ds.db.editObject[3].content = 0
+        ds.db.editObject[4].content = 0
+        ds.db.editObject[5].content = 0
       }
     }
   }
@@ -82,7 +95,7 @@
 <style scoped>
   @import '../css/shared.css';
 
-  #add-product {
+  #edit-product {
     flex: 1;
     background: #3A506B;
     color: #FFFFFF;

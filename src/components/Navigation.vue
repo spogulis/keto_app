@@ -2,7 +2,7 @@
   <div id="nav-div">
     <button class="button"> {{ planBtn }}</button>
     <button class="button" @click="toggleAdd()"> {{ addBtn }}</button>
-    <button class="button"> {{ editBtn }}</button>
+    <button class="button"> {{ recipesBtn }}</button>
     <button class="button" @click="toggleDb()"> {{ dbBtn }}</button>
   </div>
 </template>
@@ -15,22 +15,21 @@
         dbBtn: 'Open database',
         addBtn: 'Add product',
         planBtn: 'Plan meal',
-        editBtn: 'Edit product'
+        recipesBtn: 'Recipes'
       }
     },
 
     methods: {
-
       toggleDb() {
-        this.$emit('dbemit')
+        this.$emit('dbemit'),
+        this.$emit('editemit')
       },
 
       toggleAdd() {
         this.$emit('apemit')
       }
-
-      }
     }
+  }
 
 </script>
 
