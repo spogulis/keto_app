@@ -8,7 +8,8 @@
         </tr>
         <tr>
           <th
-            v-for="prAttr in ds.db.gridColumns"
+            v-for="(prAttr, i) in ds.db.gridColumns"
+            v-bind:id="'col' + i"
           >{{ prAttr }}</th>
         </tr>
       </thead>
@@ -16,7 +17,7 @@
         <template :weight="weight" v-for="(product, i) in ds.db.products">
           <tr >
             <td class="id-col" rowspan="2">{{ i + 1 }}</td>
-            <td class="title-row" colspan="7"><i>{{ product.name }}</i></td>
+            <td class="title-row" colspan="7">{{ product.name }}</td>
           </tr>
 
           <tr>
@@ -40,8 +41,6 @@
         </template>
       </tbody>
     </table>
-
-
   </div>
 </template>
 
@@ -120,36 +119,42 @@
 </script>
 
 <style scoped>
-  .test {
-    display: flex;
-  }
+  @import '../css/shared.css';
+
   #db {
     flex: 1 1 100%;
     background: lightgrey;
+    padding: 0;
   }
 
   table {
-    padding: 10px 0;
     width: 100%;
   }
 
+  #col0 {
+    width: 5px;
+    padding: 10px 10px;
+  }
   .id-col {
-    /* max-width: 20px; */ /* TODO: fix width */
+    padding: 10px 10px;
   }
 
   .title-row {
+    font-family: Adam;
     border-bottom: 1px solid white;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
-    color: #1C2541;
+    color: #FFFF;
+    background: #3A506B;
+    padding: 6px 0 13px 0;
   }
 
   th {
-    border-right: 1px solid white;
-    border-bottom: 2px solid white;
+    /* border-right: 1px solid white; */
+    /* border-bottom: 2px solid white; */
     padding: 3px 3px;
-    width: 10%;
-    min-width: 10%;
+    color: white;
+    background: #1C2541;
   }
 
   th:last-of-type {
@@ -158,7 +163,6 @@
 
   td {
     border-right: 1px solid white;
-    width: 10%;
     border-bottom: 1px solid white;
   }
 

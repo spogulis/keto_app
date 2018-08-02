@@ -1,8 +1,8 @@
 <template>
   <div id="nav-div">
     <button class="button"> {{ planBtn }}</button>
-    <button class="button" @click="toggleAdd()"> {{ addBtn }}</button>
     <button class="button"> {{ recipesBtn }}</button>
+    <button class="button" @click="toggleAdd()"> {{ addBtn }}</button>
     <button class="button" @click="toggleDb()"> {{ dbBtn }}</button>
   </div>
 </template>
@@ -39,7 +39,11 @@
     flex: 0 0 auto;
     display: flex;
     justify-content: space-around;
-    background: #1C2541;
+    background: #3A506B;
+  }
+
+  .button {
+    font-family: Adam;
   }
 
 </style>

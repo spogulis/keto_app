@@ -4,6 +4,7 @@ export default {
   apshow: false,
   epshow: false,
   pmshow: false,
+  videoshow: true,
   weight: 100,
   form_keys: ['Product name', 'Carbs (g)', 'of which sugar(g)', 'Fiber (g)',
               'Fat (g)', 'Protein (g)'],

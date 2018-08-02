@@ -5,8 +5,14 @@
       v-on:apemit="toggleAp()"
       v-on:dbemit="toggleDb()">
     </nav-buttons>
+    <video id="video-container" v-show="ds.videoshow" width="100%" loop autoplay>
+      <source src="./assets/coffee.webm" type="video/webm" />
+    </video>
+    <!-- <div id="video-container" v-show="ds.videoshow">
+    </div> -->
     <add-product v-show="ds.apshow"></add-product>
     <db v-if="ds.dbshow"></db>
+
   </div>
 </template>
 
@@ -38,11 +44,23 @@ export default {
       if (ds.editshow == true) {
         ds.editshow = false
       }
+      if (ds.dbshow == false) {
+        ds.videoshow = true
+      } else {
+        ds.videoshow = false
+      }
+
     },
     toggleAp() {
       ds.apshow = !ds.apshow
       if (ds.editshow == true) {
         ds.editshow = false
+      }
+
+      if (ds.apshow == false) {
+        ds.videoshow = true
+      } else {
+        ds.videoshow = false
       }
     }
   }
@@ -50,6 +68,11 @@ export default {
 </script>
 
 <style>
+
+  #video-container {
+      background: #3A506B;
+  }
+
   html, body {
     margin: 0;
     padding: 0;
