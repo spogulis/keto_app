@@ -4,6 +4,18 @@
     <table>
       <thead>
         <tr>
+          <th id="slider-title" colspan="3">
+            Filter weight: {{ ds.weight }}
+          </th>
+          <th colspan="8">
+            <input class="slider"
+            type="range"
+            v-model="ds.weight"
+            min="1"
+            max="1000">
+          </th>
+        </tr>
+        <tr>
           <th colspan="8">Product name</th>
         </tr>
         <tr>
@@ -120,6 +132,17 @@
 
 <style scoped>
   @import '../css/shared.css';
+
+  html {
+    font-family: adam;
+  }
+  .slider {
+    width: 90%;
+  }
+
+  #slider-title {
+      font-family: adam;
+  }
 
   #db {
     flex: 1 1 100%;

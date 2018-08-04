@@ -56,19 +56,19 @@
       submit_form() {
         ds.db.products.push({
           name: ds.form_values[0],
-          carbs: this.calculateGrams(ds.form_values[1]),
-          sugar: this.calculateGrams(ds.form_values[2]),
-          fiber: this.calculateGrams(ds.form_values[3]),
-          fat: this.calculateGrams(ds.form_values[4]),
-          protein: this.calculateGrams(ds.form_values[5]),
+          carbs: ds.form_values[1],
+          sugar: ds.form_values[2],
+          fiber: ds.form_values[3],
+          fat: ds.form_values[4],
+          protein: ds.form_values[5],
           unknwn: 'unknwn_ingredients'})
           this.resetForm()
       },
 
-      calculateGrams(foodstuff) {
-        var coef = parseFloat(ds.weight / 100)
-        return foodstuff * coef
-      },
+      // calculateGrams(foodstuff) {
+      //   var coef = parseFloat(ds.weight / 100)
+      //   return foodstuff * coef
+      // },
 
       resetForm() {
         ds.form_values = ['', 0, 0, 0, 0, 0]

@@ -1,6 +1,6 @@
 <template>
   <div id="nav-div">
-    <button class="button"> {{ planBtn }}</button>
+    <button class="button" @click="togglePlan()"> {{ planBtn }}</button>
     <button class="button"> {{ recipesBtn }}</button>
     <button class="button" @click="toggleAdd()"> {{ addBtn }}</button>
     <button class="button" @click="toggleDb()"> {{ dbBtn }}</button>
@@ -20,6 +20,10 @@
     },
 
     methods: {
+      togglePlan() {
+          this.$emit('planemit')
+      },
+
       toggleDb() {
         this.$emit('dbemit'),
         this.$emit('editemit')
